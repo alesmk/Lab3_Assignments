@@ -1,0 +1,136 @@
+Assignment 4.
+
+- Contare le occorrenze dei caratteri alfabetici.
+- Ignorare eventuali caratteri non alfabetici (per esempio le cifre)
+- Osservare un insieme di file di testo -> prendere in input una serie di percorsi di file testuali
+- Un task riguarda un file.
+- I task registrano i loro risultati parziali all'interno di una ConcurrentHashMap.
+- Stampare su un file di output il numeri di occorrenze di ogni carattere.
+
+/**
+ * 
+ * 		Alessia Anile
+ * 		Matricola 619554
+ * 		Assignment 4		
+ * 		Reti e Laboratorio III - A.A. 2022/23
+ * 
+ */
+
+
+-- Sincronizzazione ? ConcurrentHashMap non è thread safe? -> Controlla valori | Adegua contains, put, ecc ----> beh ho messo che ognuno ha la sua ::))
+-- Modifica struttura classi ?  no
+
+iterator in print?
+writer.flush(); // necessario?
+
+
+DOMANDE
+Differenza tra maiuscole e minuscole? no
+Considerare caratteri accentati (tg) FATTo
+
+I task registrano i loro risultati parziali all'interno di una ConcurrentHashMap --> ognuno ha la sua mappa e poi uniscono in seguito? in questo caso si può usare Callable e poi una mappa unica.
+fatto
+
+RISOLTO
+-- Termina la scrittura su file --fatto
+-- Caratteri alfabetici? --fatto
+-- Sbagliata la somma nella map -- risolto
+-- In realtà potresti inizializzare la map con tutti i caratteri e valore 0. -- non serve
+
+
+**
+
+import java.text.Normalizer;
+import org.apache.commons.lang3.StringUtils;
+public class Main
+{
+	public static void main(String[] args) {
+	    String s = "Abcò?+9ç☻ÇñÑßüöÄhjkTĥïŝ ĩš â fůňķŷ Šťŕĭńġ";
+	    char[] c = s.toCharArray();
+	    for(char ch : c)
+		    System.out.print(ch);
+		    
+		System.out.printf("\n\n");
+		
+		 for(char ch : c)
+		    System.out.print(ch + ": " + Character.isLetter(ch) + " | ");
+
+    	System.out.printf("\n\n");
+      
+        String st = Normalizer.normalize("àéîõüçÇñÑßüöÄ Tĥïŝ ĩš â fůňķŷ Šťŕĭńġ", Normalizer.Form.NFKD).replaceAll("\\p{M}", "");
+        System.out.println(st);
+    
+        System.out.printf("\n\t***\n");
+        
+        for(char ch : c)
+           System.out.print(Normalizer.normalize(Character.toString(ch), Normalizer.Form.NFKD).replaceAll("\\p{M}", ""));
+    
+        System.out.printf("\n\t***\n");
+        
+        String stri = StringUtils.stripAccents(s);
+        System.out.println(stri);
+	}
+	    
+}
+
+**
+
+
+ciao.txt
+<a>,<3>
+<c>,<2>
+<u>,<1>
+<h>,<1>
+<n>,<1>
+
+prova.txt
+<a>,<11>
+<c>,<4>
+<C>,<4>
+<d>,<2>
+<e>,<4>
+<h>,<1>
+<i>,<3>
+<l>,<1>
+<m>,<1>
+<n>,<3>
+<o>,<8>
+<p>,<2>
+<r>,<2>
+<s>,<3>
+<v>,<1>
+
+entrambi
+<a>,<14> 
+<c>,<5> no (6)
+<C>,<4>
+<d>,<2>
+<e>,<4>
+<h>,<2>
+<i>,<3>
+<l>,<1>
+<m>,<1>
+<n>,<4>
+<o>,<8>
+<p>,<2>
+<r>,<2>
+<s>,<3>
+<u>,<1>
+<v>,<1>
+--
+<a>,<14>
+<c>,<6>
+<C>,<4>
+<d>,<2>
+<e>,<4>
+<h>,<2>
+<i>,<3>
+<l>,<1>
+<m>,<1>
+<n>,<4>
+<o>,<8>
+<p>,<2>
+<r>,<2>
+<s>,<3>
+<u>,<1>
+<v>,<1>

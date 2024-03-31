@@ -1,0 +1,30 @@
+- 3 tipi di Utente: Studenti, Tesisti, Professori
+
+- Ogni utente deve fare una richiesta al Tutor per accedere al Laboratorio
+
+- Il Laboratorio ha computer numerati da 1 a 20. 
+
+- Le richieste di accesso sono diverse a seconda del tipo di utente
+
+-> Professori: accesso esclusivo; devono usare tutti i computer. Hanno priorità su tutti nell'accesso.
+-> Tesisti: uso esclusivo del computer i. Priorità su studenti.
+-> Studenti: uso esclusivo di un computer qualsiasi.
+
+- Nessuno può essere interrotto mentre usa un computer.
+
+---------------------------
+
+- Input:  #studenti, #tesisti, #professori.
+- Il laboratorio attiva un thread per ogni utente.
+- Ogni utente accede k volte al laboratorio. k generato casualmente.
+- Il programma termina quando tutti hanno completato l'accesso al laboratorio.
+
+
+
+
+---------------------------------------------------------------------------
+[RISOLTI]
+Utente: implementa rilascio 
+User Comparator
+Gestione Coda priorità
+Main: gestione Thread Pool
